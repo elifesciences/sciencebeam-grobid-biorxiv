@@ -55,7 +55,7 @@ download-sample:
 	curl --fail --show-error --connect-timeout 60 \
 		--user-agent "$(USER_AGENT)" \
 		--location \
-    "$(SAMPLE_PDF_URL)" \
+		"$(SAMPLE_PDF_URL)" \
 		--silent \
 		-o "$(LOCAL_SAMPLE_PDF_PATH)"
 
