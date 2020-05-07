@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+    grobid:
+        build:
+            context: .
+        image: elifesciences/sciencebeam-grobid-biorxiv:${IMAGE_TAG}
+        ports:
+            - "${GROBID_PORT:-8070}:8070"
