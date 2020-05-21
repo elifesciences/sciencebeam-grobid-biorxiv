@@ -28,5 +28,15 @@ elifePipeline {
                 unstable_image.tag('latest').push()
             }
        }
+
+       elifeTagOnly { tagName ->
+            def releaseVersion = tagName - "v"
+
+            stage 'Push release image', {
+                def image = DockerImage.elifesciences(this, 'sciencebeam-grobid-biorxiv', commit)
+                image.tag(releaseVersion).push()
+                image.tag('latest').push()
+            }
+        }
     }
 }
