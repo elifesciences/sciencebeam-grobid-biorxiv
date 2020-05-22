@@ -4,6 +4,7 @@ services:
     grobid:
         build:
             context: .
-        image: elifesciences/sciencebeam-grobid-biorxiv:${IMAGE_TAG}
+            dockerfile: ${GROBID_DOCKERFILE:-Dockerfile}
+        image: elifesciences/sciencebeam-grobid-biorxiv:${IMAGE_TAG}${GROBID_IMAGE_TAG_SUFFIX:-}
         ports:
             - "${GROBID_PORT:-8070}:8070"
