@@ -102,14 +102,12 @@ end2end-test: \
 
 build-and-end2end-test-dl-no-word-embeddings:
 	$(MAKE) "GROBID_VARIANT_NAME=$(GROBID_VARIANT_NAME_DL_NO_WORD_EMBEDDINGS)" \
-		build
-		# build end2end-test stop
+		build end2end-test stop
 
 
 build-and-end2end-test-dl-glove-6b-50d:
 	$(MAKE) "GROBID_VARIANT_NAME=$(GROBID_VARIANT_NAME_DL_GLOVE_6B_50d)" \
-		build
-		# build end2end-test stop
+		build end2end-test stop
 
 
 build-and-end2end-test-all: \
