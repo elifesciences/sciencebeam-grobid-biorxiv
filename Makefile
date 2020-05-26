@@ -120,20 +120,20 @@ build-and-end2end-test-all: \
 	$(DOCKER) tag \
 		$(IMAGE_REPO):$(GROBID_IMAGE_TAG) \
 		$(IMAGE_REPO)$(NEW_IMAGE_REPO_SUFFIX):$(NEW_GROBID_IMAGE_TAG)
-	$(DOCKER) push $(IMAGE_REPO)$(NEW_IMAGE_REPO_SUFFIX):$(NEW_GROBID_IMAGE_TAGE_TAG)
+	$(DOCKER) push $(IMAGE_REPO)$(NEW_IMAGE_REPO_SUFFIX):$(NEW_GROBID_IMAGE_TAG)
 
 
 .push-grobid-images:
 	$(MAKE) \
 		"GROBID_VARIANT_NAME=$(GROBID_VARIANT_NAME_DL_NO_WORD_EMBEDDINGS)" \
-		 .re-tag-and-push-grobid-image
+		.re-tag-and-push-grobid-image
 	$(MAKE) \
 		"GROBID_VARIANT_NAME=$(GROBID_VARIANT_NAME_DL_GLOVE_6B_50d)" \
-		 .re-tag-and-push-grobid-image
+		.re-tag-and-push-grobid-image
 	$(MAKE) \
 		"NEW_GROBID_IMAGE_TAG=latest" \
 		"GROBID_VARIANT_NAME=$(GROBID_VARIANT_NAME_DL_GLOVE_6B_50d)" \
-		 .re-tag-and-push-grobid-image
+		.re-tag-and-push-grobid-image
 
 
 ci-build-and-test:
