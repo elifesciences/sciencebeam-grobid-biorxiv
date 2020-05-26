@@ -1,9 +1,8 @@
-DOCKER_COMPOSE_CI = GROBID_PORT=$(GROBID_PORT) \
+DOCKER_COMPOSE = GROBID_PORT=$(GROBID_PORT) \
 	IMAGE_TAG=$(IMAGE_TAG) \
 	GROBID_DOCKERFILE=$(GROBID_DOCKERFILE) \
 	GROBID_IMAGE_TAG_SUFFIX=$(GROBID_IMAGE_TAG_SUFFIX) \
 	docker-compose -f docker-compose.yml
-DOCKER_COMPOSE = $(DOCKER_COMPOSE_CI)
 
 DOCKER = docker
 
@@ -137,8 +136,7 @@ build-and-end2end-test-all: \
 
 
 ci-build-and-test:
-	$(MAKE) DOCKER_COMPOSE="$(DOCKER_COMPOSE_CI)" \
-		build-and-end2end-test-all
+	$(MAKE) build-and-end2end-test-all
 
 
 ci-push-unstable-images:
@@ -158,4 +156,4 @@ ci-push-release-images-dryrun:
 
 
 ci-clean:
-	$(DOCKER_COMPOSE_CI) down -v
+	$(DOCKER_COMPOSE) down -v
