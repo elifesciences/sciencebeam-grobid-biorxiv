@@ -1,9 +1,11 @@
 DOCKER_COMPOSE_CI = GROBID_PORT=$(GROBID_PORT) \
+	IMAGE_TAG=$(IMAGE_TAG) \
 	GROBID_DOCKERFILE=$(GROBID_DOCKERFILE) \
 	GROBID_IMAGE_TAG_SUFFIX=$(GROBID_IMAGE_TAG_SUFFIX) \
 	docker-compose -f docker-compose.yml
 DOCKER_COMPOSE = $(DOCKER_COMPOSE_CI)
 
+DOCKER = docker
 
 SAMPLE_PDF_URL = https://cdn.elifesciences.org/articles/32671/elife-32671-v2.pdf
 
@@ -19,8 +21,16 @@ GROBID_VARIANT_NAME_DL_GLOVE_6B_50d = dl-glove-6B-50d
 
 GROBID_VARIANT_NAME = $(GROBID_VARIANT_NAME_DL_NO_WORD_EMBEDDINGS)
 
+IMAGE_REPO = elifesciences/sciencebeam-grobid-biorxiv
+IMAGE_REPO_SUFFIX = _unstable
+IMAGE_TAG = develop
 GROBID_DOCKERFILE = Dockerfile.$(GROBID_VARIANT_NAME)
 GROBID_IMAGE_TAG_SUFFIX = -$(GROBID_VARIANT_NAME)
+GROBID_IMAGE_TAG = $(IMAGE_TAG)$(GROBID_IMAGE_TAG_SUFFIX)
+
+NEW_IMAGE_REPO_SUFFIX =
+NEW_IMAGE_TAG = $(IMAGE_TAG)
+NEW_GROBID_IMAGE_TAG = $(NEW_IMAGE_TAG)$(GROBID_IMAGE_TAG_SUFFIX)
 
 
 .PHONY: build
@@ -106,9 +116,45 @@ build-and-end2end-test-all: \
 	build-and-end2end-test-dl-glove-6b-50d
 
 
+.re-tag-and-push-grobid-image:
+	$(DOCKER) tag \
+		$(IMAGE_REPO):$(GROBID_IMAGE_TAG) \
+		$(IMAGE_REPO)$(NEW_IMAGE_REPO_SUFFIX):$(NEW_GROBID_IMAGE_TAG)
+	$(DOCKER) push $(IMAGE_REPO)$(NEW_IMAGE_REPO_SUFFIX):$(NEW_GROBID_IMAGE_TAGE_TAG)
+
+
+.push-grobid-images:
+	$(MAKE) \
+		"GROBID_VARIANT_NAME=$(GROBID_VARIANT_NAME_DL_NO_WORD_EMBEDDINGS)" \
+		 .re-tag-and-push-grobid-image
+	$(MAKE) \
+		"GROBID_VARIANT_NAME=$(GROBID_VARIANT_NAME_DL_GLOVE_6B_50d)" \
+		 .re-tag-and-push-grobid-image
+	$(MAKE) \
+		"NEW_GROBID_IMAGE_TAG=latest" \
+		"GROBID_VARIANT_NAME=$(GROBID_VARIANT_NAME_DL_GLOVE_6B_50d)" \
+		 .re-tag-and-push-grobid-image
+
+
 ci-build-and-test:
 	$(MAKE) DOCKER_COMPOSE="$(DOCKER_COMPOSE_CI)" \
 		build-and-end2end-test-all
+
+
+ci-push-unstable-images:
+	$(MAKE) "NEW_IMAGE_REPO_SUFFIX=_unstable" .push-grobid-images
+
+
+ci-push-unstable-images-dryrun:
+	$(MAKE) "DOCKER=echo docker" ci-push-unstable-images
+
+
+ci-push-release-images:
+	$(MAKE) "NEW_IMAGE_REPO_SUFFIX=" .push-grobid-images
+
+
+ci-push-release-images-dryrun:
+	$(MAKE) "DOCKER=echo docker" ci-push-release-images
 
 
 ci-clean:

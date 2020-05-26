@@ -1,7 +1,6 @@
 elifePipeline {
     node('containers-jenkins-plugin') {
         def commit
-        def baseGrobidTag
 
         stage 'Checkout', {
             checkout scm
@@ -22,10 +21,11 @@ elifePipeline {
             }
 
             stage 'Push unstable image', {
-                def image = DockerImage.elifesciences(this, 'sciencebeam-grobid-biorxiv', commit)
-                def unstable_image = image.addSuffixAndTag('_unstable', commit)
-                unstable_image.push()
-                unstable_image.tag('latest').push()
+                try {
+                    sh "make IMAGE_TAG=${commit} ci-push-unstable-images"
+                } finally {
+                    sh "make ci-clean"
+                }
             }
        }
 
@@ -33,9 +33,14 @@ elifePipeline {
             def releaseVersion = tagName - "v"
 
             stage 'Push release image', {
-                def image = DockerImage.elifesciences(this, 'sciencebeam-grobid-biorxiv', commit)
-                image.tag(releaseVersion).push()
-                image.tag('latest').push()
+                try {
+                    sh "make \
+                        IMAGE_TAG=${commit} \
+                        NEW_IMAGE_TAG=${releaseVersion} \
+                        ci-push-release-images"
+                } finally {
+                    sh "make ci-clean"
+                }
             }
         }
     }
