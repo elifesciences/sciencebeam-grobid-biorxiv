@@ -1,4 +1,6 @@
 DOCKER_COMPOSE_CI = GROBID_PORT=$(GROBID_PORT) \
+	GROBID_DOCKERFILE=$(GROBID_DOCKERFILE) \
+	GROBID_IMAGE_TAG_SUFFIX=$(GROBID_IMAGE_TAG_SUFFIX) \
 	docker-compose -f docker-compose.yml
 DOCKER_COMPOSE = $(DOCKER_COMPOSE_CI)
 
@@ -11,6 +13,14 @@ LOCAL_SAMPLE_PDF_PATH = $(TEMP_DIR)/sample.pdf
 USER_AGENT= Dummy/user-agent
 
 GROBID_PORT = 9070
+
+GROBID_VARIANT_NAME_DL_NO_WORD_EMBEDDINGS = dl-no-word-embeddings
+GROBID_VARIANT_NAME_DL_GLOVE_6B_50d = dl-glove-6B-50d
+
+GROBID_VARIANT_NAME = $(GROBID_VARIANT_NAME_DL_NO_WORD_EMBEDDINGS)
+
+GROBID_DOCKERFILE = Dockerfile.$(GROBID_VARIANT_NAME)
+GROBID_IMAGE_TAG_SUFFIX = -$(GROBID_VARIANT_NAME)
 
 
 .PHONY: build
@@ -81,9 +91,24 @@ end2end-test: \
 	convert-sample
 
 
+build-and-end2end-test-dl-no-word-embeddings:
+	$(MAKE) "GROBID_VARIANT_NAME=$(GROBID_VARIANT_NAME_DL_NO_WORD_EMBEDDINGS)" \
+		build end2end-test stop
+
+
+build-and-end2end-test-dl-glove-6b-50d:
+	$(MAKE) "GROBID_VARIANT_NAME=$(GROBID_VARIANT_NAME_DL_GLOVE_6B_50d)" \
+		build end2end-test stop
+
+
+build-and-end2end-test-all: \
+	build-and-end2end-test-dl-no-word-embeddings \
+	build-and-end2end-test-dl-glove-6b-50d
+
+
 ci-build-and-test:
 	$(MAKE) DOCKER_COMPOSE="$(DOCKER_COMPOSE_CI)" \
-		build end2end-test stop
+		build-and-end2end-test-all
 
 
 ci-clean:
