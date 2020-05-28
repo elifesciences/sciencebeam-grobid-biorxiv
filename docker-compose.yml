@@ -8,3 +8,5 @@ services:
         image: elifesciences/sciencebeam-grobid-biorxiv:${IMAGE_TAG}${GROBID_IMAGE_TAG_SUFFIX:-}
         ports:
             - "${GROBID_PORT:-8070}:8070"
+        extra_hosts:
+            - github.com:127.0.0.1
