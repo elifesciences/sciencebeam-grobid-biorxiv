@@ -15,6 +15,7 @@ USER_AGENT= Dummy/user-agent
 
 GROBID_PORT = 9070
 
+GROBID_VARIANT_NAME_DL_WAPITI = wapiti
 GROBID_VARIANT_NAME_DL_NO_WORD_EMBEDDINGS = dl-no-word-embeddings
 GROBID_VARIANT_NAME_DL_GLOVE_6B_50d = dl-glove-6B-50d
 
@@ -100,6 +101,11 @@ end2end-test: \
 	convert-sample
 
 
+build-and-end2end-test-wapiti:
+	$(MAKE) "GROBID_VARIANT_NAME=$(GROBID_VARIANT_NAME_DL_WAPITI)" \
+		build end2end-test stop
+
+
 build-and-end2end-test-dl-no-word-embeddings:
 	$(MAKE) "GROBID_VARIANT_NAME=$(GROBID_VARIANT_NAME_DL_NO_WORD_EMBEDDINGS)" \
 		build end2end-test stop
@@ -111,6 +117,7 @@ build-and-end2end-test-dl-glove-6b-50d:
 
 
 build-and-end2end-test-all: \
+	build-and-end2end-test-wapiti \
 	build-and-end2end-test-dl-no-word-embeddings \
 	build-and-end2end-test-dl-glove-6b-50d
 
@@ -123,6 +130,9 @@ build-and-end2end-test-all: \
 
 
 .push-grobid-images:
+	$(MAKE) \
+		"GROBID_VARIANT_NAME=$(GROBID_VARIANT_NAME_DL_WAPITI)" \
+		.re-tag-and-push-grobid-image
 	$(MAKE) \
 		"GROBID_VARIANT_NAME=$(GROBID_VARIANT_NAME_DL_NO_WORD_EMBEDDINGS)" \
 		.re-tag-and-push-grobid-image
