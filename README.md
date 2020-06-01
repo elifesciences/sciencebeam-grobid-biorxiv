@@ -5,9 +5,9 @@ A variation of the [GROBID](https://github.com/kermitt2/grobid) image, that incl
 ## Run Image
 
 ```bash
-docker pull elifesciences/sciencebeam-grobid-biorxiv_unstable
+docker pull elifesciences/sciencebeam-grobid-biorxiv
 docker run -t --rm --init -p 8080:8070 -p 8081:8071 \
-  elifesciences/sciencebeam-grobid-biorxiv_unstable
+  elifesciences/sciencebeam-grobid-biorxiv
 ```
 
 (for deployments it is recommended to use a specific tag)
