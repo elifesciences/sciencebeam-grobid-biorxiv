@@ -10,7 +10,7 @@ services:
     grobid:
         build:
             context: .
-            dockerfile: ${GROBID_DOCKERFILE:-Dockerfile}
+            dockerfile: ${GROBID_DOCKERFILE}
             args:
                 base_image: elifesciences/sciencebeam-grobid-biorxiv_base:${IMAGE_TAG}
         image: elifesciences/sciencebeam-grobid-biorxiv:${IMAGE_TAG}${GROBID_IMAGE_TAG_SUFFIX:-}
