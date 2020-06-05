@@ -1,12 +1,22 @@
 version: '3'
 
 services:
+    grobid-base:
+        build:
+            context: .
+            dockerfile: Dockerfile.base
+        image: elifesciences/sciencebeam-grobid-biorxiv_base:${IMAGE_TAG}
+        command: /bin/sh -c exit 0
     grobid:
         build:
             context: .
-            dockerfile: ${GROBID_DOCKERFILE:-Dockerfile}
+            dockerfile: ${GROBID_DOCKERFILE}
+            args:
+                base_image: elifesciences/sciencebeam-grobid-biorxiv_base:${IMAGE_TAG}
         image: elifesciences/sciencebeam-grobid-biorxiv:${IMAGE_TAG}${GROBID_IMAGE_TAG_SUFFIX:-}
         ports:
             - "${GROBID_PORT:-8070}:8070"
         extra_hosts:
             - github.com:127.0.0.1
+        depends_on:
+            - grobid-base
