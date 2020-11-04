@@ -3,17 +3,17 @@ FROM ${base_image}
 
 RUN python -m sciencebeam_trainer_delft.sequence_labelling.tools.install_models \
     --model-base-path=${GROBID_MODELS_DIRECTORY} \
-    --install "segmentation=https://github.com/elifesciences/sciencebeam-models/releases/download/v0.0.1/delft-grobid-segmentation-biorxiv-no-word-embedding-2020-05-07.tar.gz" \
+    --install "segmentation=https://github.com/elifesciences/sciencebeam-models/releases/download/v0.0.1/2020-10-04-delft-grobid-segmentation-biorxiv-no-word-embedding-text-feature.tar.gz" \
     --validate-pickles
 
 RUN python -m sciencebeam_trainer_delft.sequence_labelling.tools.install_models \
     --model-base-path=${GROBID_MODELS_DIRECTORY} \
-    --install "header=https://github.com/elifesciences/sciencebeam-models/releases/download/v0.0.1/delft-grobid-header-biorxiv-no-word-embedding-2020-05-05.tar.gz" \
+    --install "header=https://github.com/elifesciences/sciencebeam-models/releases/download/v0.0.1/2020-10-04-delft-grobid-header-biorxiv-no-word-embedding.tar.gz" \
     --validate-pickles
 
 RUN python -m sciencebeam_trainer_delft.sequence_labelling.tools.install_models \
     --model-base-path=${GROBID_MODELS_DIRECTORY} \
-    --install "reference-segmenter=https://github.com/elifesciences/sciencebeam-models/releases/download/v0.0.1/delft-grobid-reference-segmenter-biorxiv-no-word-embedding-2020-05-07.tar.gz" \
+    --install "reference-segmenter=https://github.com/elifesciences/sciencebeam-models/releases/download/v0.0.1/2020-10-04-delft-grobid-reference-segmenter-biorxiv-no-word-embedding.tar.gz" \
     --validate-pickles
 
 ENV GROBID__CRF__ENGINE__SEGMENTATION=delft
