@@ -3,7 +3,7 @@ FROM elifesciences/sciencebeam-trainer-delft-grobid:0.0.9
 ENV GROBID_MODELS_DIRECTORY=/opt/grobid/grobid-home/models
 ENV GROBID__CRF__ENGINE=wapiti
 ENV GROBID__HEADER__USE_HEURISTICS=false
-ENV GROBID__FEATURES__REMOVE_LINE_NUMBERS=true
+ENV GROBID__FEATURES__REMOVE_LINE_NUMBERS=false
 
 HEALTHCHECK --interval=10s --timeout=10s \
   CMD curl --fail http://localhost:8070 || exit 1
