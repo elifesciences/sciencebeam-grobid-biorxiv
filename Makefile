@@ -114,6 +114,11 @@ build-and-end2end-test-dl-no-word-embeddings:
 		build end2end-test stop
 
 
+build-and-end2end-test-dl-no-word-embeddings-wapiti-citation:
+	$(MAKE) "GROBID_VARIANT_NAME=$(GROBID_VARIANT_NAME_DL_NO_WORD_EMBEDDINGS_WAPITI_CITATION)" \
+		build end2end-test stop
+
+
 build-and-end2end-test-dl-glove-6b-50d:
 	$(MAKE) "GROBID_VARIANT_NAME=$(GROBID_VARIANT_NAME_DL_GLOVE_6B_50d)" \
 		build end2end-test stop
@@ -122,6 +127,7 @@ build-and-end2end-test-dl-glove-6b-50d:
 build-and-end2end-test-all: \
 	build-and-end2end-test-wapiti \
 	build-and-end2end-test-dl-no-word-embeddings \
+	build-and-end2end-test-dl-no-word-embeddings-wapiti-citation \
 	build-and-end2end-test-dl-glove-6b-50d
 
 
