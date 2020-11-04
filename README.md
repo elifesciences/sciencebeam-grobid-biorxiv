@@ -11,7 +11,7 @@ There are multiple [image tags of elifesciences/sciencebeam-grobid-biorxiv](http
 | `wapiti`   | traditional, non-DL model |
 | `dl-no-word-embeddings` | DL model, not using any word embeddings |
 | `dl-no-word-embeddings-wapiti-citation` | Same as `dl-no-word-embeddings`, but the `citation` model is using wapiti. |
-| `dl-glove-6B-50d` | DL model, using [glove.6B 50d word embeddings](https://nlp.stanford.edu/projects/glove/). This improves the accuracy over not using any word embeddings while still keeping the image size reasonable. (recommended) |
+| `dl-glove-6B-50d` | DL model, using [glove.6B 50d word embeddings](https://nlp.stanford.edu/projects/glove/). This improves the accuracy over not using any word embeddings while still keeping the image size reasonable. (these models are currently not updated) |
 
 All of the models are trained using the same bioRxiv dataset.
 
