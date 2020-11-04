@@ -17,9 +17,12 @@ GROBID_PORT = 9070
 
 GROBID_VARIANT_NAME_DL_WAPITI = wapiti
 GROBID_VARIANT_NAME_DL_NO_WORD_EMBEDDINGS = dl-no-word-embeddings
+GROBID_VARIANT_NAME_DL_NO_WORD_EMBEDDINGS_WAPITI_CITATION = dl-no-word-embeddings-wapiti-citation
 GROBID_VARIANT_NAME_DL_GLOVE_6B_50d = dl-glove-6B-50d
 
-GROBID_VARIANT_NAME = $(GROBID_VARIANT_NAME_DL_NO_WORD_EMBEDDINGS)
+DEFAULT_GROBID_VARIANT_NAME = $(GROBID_VARIANT_NAME_DL_NO_WORD_EMBEDDINGS_WAPITI_CITATION)
+
+GROBID_VARIANT_NAME = $(DEFAULT_GROBID_VARIANT_NAME)
 
 IMAGE_REPO = elifesciences/sciencebeam-grobid-biorxiv
 IMAGE_REPO_SUFFIX = _unstable
@@ -111,6 +114,11 @@ build-and-end2end-test-dl-no-word-embeddings:
 		build end2end-test stop
 
 
+build-and-end2end-test-dl-no-word-embeddings-wapiti-citation:
+	$(MAKE) "GROBID_VARIANT_NAME=$(GROBID_VARIANT_NAME_DL_NO_WORD_EMBEDDINGS_WAPITI_CITATION)" \
+		build end2end-test stop
+
+
 build-and-end2end-test-dl-glove-6b-50d:
 	$(MAKE) "GROBID_VARIANT_NAME=$(GROBID_VARIANT_NAME_DL_GLOVE_6B_50d)" \
 		build end2end-test stop
@@ -119,6 +127,7 @@ build-and-end2end-test-dl-glove-6b-50d:
 build-and-end2end-test-all: \
 	build-and-end2end-test-wapiti \
 	build-and-end2end-test-dl-no-word-embeddings \
+	build-and-end2end-test-dl-no-word-embeddings-wapiti-citation \
 	build-and-end2end-test-dl-glove-6b-50d
 
 
@@ -137,11 +146,14 @@ build-and-end2end-test-all: \
 		"GROBID_VARIANT_NAME=$(GROBID_VARIANT_NAME_DL_NO_WORD_EMBEDDINGS)" \
 		.re-tag-and-push-grobid-image
 	$(MAKE) \
+		"GROBID_VARIANT_NAME=$(GROBID_VARIANT_NAME_DL_NO_WORD_EMBEDDINGS_WAPITI_CITATION)" \
+		.re-tag-and-push-grobid-image
+	$(MAKE) \
 		"GROBID_VARIANT_NAME=$(GROBID_VARIANT_NAME_DL_GLOVE_6B_50d)" \
 		.re-tag-and-push-grobid-image
 	$(MAKE) \
 		"NEW_GROBID_IMAGE_TAG=latest" \
-		"GROBID_VARIANT_NAME=$(GROBID_VARIANT_NAME_DL_GLOVE_6B_50d)" \
+		"GROBID_VARIANT_NAME=$(DEFAULT_GROBID_VARIANT_NAME)" \
 		.re-tag-and-push-grobid-image
 
 
