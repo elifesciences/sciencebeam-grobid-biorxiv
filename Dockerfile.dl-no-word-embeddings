@@ -13,9 +13,15 @@ RUN python -m sciencebeam_trainer_delft.sequence_labelling.tools.install_models 
 
 RUN python -m sciencebeam_trainer_delft.sequence_labelling.tools.install_models \
     --model-base-path=${GROBID_MODELS_DIRECTORY} \
+    --install "affiliation-address=https://github.com/elifesciences/sciencebeam-models/releases/download/v0.0.1/2020-10-04-delft-grobid-affiliation-address-biorxiv-no-word-embedding.tar.gz" \
+    --validate-pickles
+
+RUN python -m sciencebeam_trainer_delft.sequence_labelling.tools.install_models \
+    --model-base-path=${GROBID_MODELS_DIRECTORY} \
     --install "reference-segmenter=https://github.com/elifesciences/sciencebeam-models/releases/download/v0.0.1/2020-10-04-delft-grobid-reference-segmenter-biorxiv-no-word-embedding.tar.gz" \
     --validate-pickles
 
 ENV GROBID__CRF__ENGINE__SEGMENTATION=delft
 ENV GROBID__CRF__ENGINE__HEADER=delft
+ENV GROBID__CRF__ENGINE__AFFILIATION_ADDRESS=delft
 ENV GROBID__CRF__ENGINE__REFERENCE_SEGMENTER=delft
