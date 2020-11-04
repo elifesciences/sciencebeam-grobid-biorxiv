@@ -1,4 +1,4 @@
-FROM elifesciences/sciencebeam-trainer-delft-grobid_unstable:04346b26b5fa7966cef4d6ec6bba867feba52d66-dee3b060495006aa9f8e1b89f6278b44231fe0cc
+FROM elifesciences/sciencebeam-trainer-delft-grobid:0.0.9
 
 ENV GROBID_MODELS_DIRECTORY=/opt/grobid/grobid-home/models
 ENV GROBID__CRF__ENGINE=wapiti
