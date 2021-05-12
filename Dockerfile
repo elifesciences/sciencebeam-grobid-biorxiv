@@ -86,7 +86,7 @@ RUN python -m sciencebeam_trainer_delft.sequence_labelling.tools.install_models 
 ENV GROBID__CRF__ENGINE__CITATION=wapiti
 
 
-FROM base AS dl-glove-6B-50d
+FROM dl-no-word-embeddings AS dl-glove-6B-50d
 
 ENV EMBEDDING_REGISTRY_PATH="${PROJECT_FOLDER}/embedding-registry.json"
 
