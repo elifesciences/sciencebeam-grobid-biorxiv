@@ -6,8 +6,6 @@ services:
             context: .
             dockerfile: Dockerfile
             target: ${GROBID_VARIANT_NAME}
-            args:
-                base_image: elifesciences/sciencebeam-grobid-biorxiv_base:${IMAGE_TAG}
         image: elifesciences/sciencebeam-grobid-biorxiv:${IMAGE_TAG}${GROBID_IMAGE_TAG_SUFFIX:-}
         ports:
             - "${GROBID_PORT:-8070}:8070"
