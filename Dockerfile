@@ -1,4 +1,4 @@
-FROM elifesciences/sciencebeam-trainer-delft-grobid:0.0.14 AS base
+FROM elifesciences/sciencebeam-trainer-delft-grobid:0.0.27 AS base
 
 ENV GROBID_MODELS_DIRECTORY=/opt/grobid/grobid-home/models
 ENV GROBID__CRF__ENGINE=wapiti
