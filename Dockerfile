@@ -1,12 +1,19 @@
 FROM elifesciences/sciencebeam-trainer-delft-grobid:0.0.27 AS base
 
-ENV GROBID_MODELS_DIRECTORY=/opt/grobid/grobid-home/models
+ENV GROBID_HOME_DIRECTORY="/opt/grobid/grobid-home"
+ENV GROBID_MODELS_DIRECTORY="${GROBID_HOME_DIRECTORY}/models"
 ENV GROBID__CRF__ENGINE=wapiti
 ENV GROBID__HEADER__USE_HEURISTICS=false
 ENV GROBID__FEATURES__REMOVE_LINE_NUMBERS=false
 ENV GROBID__3RDPARTY__PDF2XML__MEMORY__TIMEOUT__SEC=300
 ENV GROBID__PDF__BLOCKS__MAX=1000000
 ENV GROBID__PDF__TOKENS__MAX=10000000
+ENV GROBID_ARCHITECTURE_STR=lin-64
+ENV PDF2XML_HOME_DIRECTORY="${GROBID_HOME_DIRECTORY}/pdf2xml/${GROBID_ARCHITECTURE_STR}"
+
+RUN python -m sciencebeam_trainer_delft.sequence_labelling.tools.install_file \
+    --source="https://github.com/kermitt2/pdfalto/files/6104204/pdfalto-4b4e983413278a07bb4cc4b2836de03adc8ca6dc-dockcross-linux-64.gz" \
+    --target="${PDF2XML_HOME_DIRECTORY}/pdfalto"
 
 HEALTHCHECK --interval=10s --timeout=10s \
   CMD curl --fail http://localhost:8070 || exit 1
