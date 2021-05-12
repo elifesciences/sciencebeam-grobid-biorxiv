@@ -53,7 +53,7 @@ ENV GROBID__DELFT__ARCHITECTURE=dummy-delft-architecture
 RUN rm -rf "${GROBID_MODELS_DIRECTORY}/segmentation"* \
     && python -m sciencebeam_trainer_delft.sequence_labelling.tools.install_models \
     --model-base-path=${GROBID_MODELS_DIRECTORY} \
-    --install "segmentation-${GROBID__DELFT__ARCHITECTURE}=https://github.com/elifesciences/sciencebeam-models/releases/download/v0.0.1/2020-10-04-delft-grobid-segmentation-biorxiv-no-word-embedding-text-feature.tar.gz" \
+    --install "segmentation-${GROBID__DELFT__ARCHITECTURE}=https://github.com/elifesciences/sciencebeam-models/releases/download/biorxiv-grobid/2021-05-11-delft-grobid-segmentation-biorxiv-10k-auto-v0.0.23-train-1966-e133.tar.gz" \
     --validate-pickles
 
 RUN rm -rf "${GROBID_MODELS_DIRECTORY}/header"* \
@@ -68,6 +68,12 @@ RUN rm -rf "${GROBID_MODELS_DIRECTORY}/affiliation-address"* \
     --install "affiliation-address-${GROBID__DELFT__ARCHITECTURE}=https://github.com/elifesciences/sciencebeam-models/releases/download/v0.0.1/2020-10-04-delft-grobid-affiliation-address-biorxiv-no-word-embedding.tar.gz" \
     --validate-pickles
 
+RUN rm -rf "${GROBID_MODELS_DIRECTORY}/fulltext"* \
+    && python -m sciencebeam_trainer_delft.sequence_labelling.tools.install_models \
+    --model-base-path=${GROBID_MODELS_DIRECTORY} \
+    --install "fulltext-${GROBID__DELFT__ARCHITECTURE}=https://github.com/elifesciences/sciencebeam-models/releases/download/biorxiv-grobid/2021-05-11-delft-grobid-fulltext-biorxiv-10k-auto-v0.0.21-train-1986-e159.tar.gz" \
+    --validate-pickles
+
 RUN rm -rf "${GROBID_MODELS_DIRECTORY}/reference-segmenter"* \
     && python -m sciencebeam_trainer_delft.sequence_labelling.tools.install_models \
     --model-base-path=${GROBID_MODELS_DIRECTORY} \
@@ -80,11 +86,26 @@ RUN rm -rf "${GROBID_MODELS_DIRECTORY}/citation"* \
     --install "citation-${GROBID__DELFT__ARCHITECTURE}=https://github.com/elifesciences/sciencebeam-models/releases/download/v0.0.1/2020-10-04-delft-grobid-citation-biorxiv-no-word-embedding.tar.gz" \
     --validate-pickles
 
+RUN rm -rf "${GROBID_MODELS_DIRECTORY}/figure"* \
+    && python -m sciencebeam_trainer_delft.sequence_labelling.tools.install_models \
+    --model-base-path=${GROBID_MODELS_DIRECTORY} \
+    --install "figure-${GROBID__DELFT__ARCHITECTURE}=https://github.com/elifesciences/sciencebeam-models/releases/download/biorxiv-grobid/2021-05-11-delft-grobid-figure-biorxiv-10k-auto-v0.0.18-train-1865-e219.tar.gz" \
+    --validate-pickles
+
+RUN rm -rf "${GROBID_MODELS_DIRECTORY}/table"* \
+    && python -m sciencebeam_trainer_delft.sequence_labelling.tools.install_models \
+    --model-base-path=${GROBID_MODELS_DIRECTORY} \
+    --install "table-${GROBID__DELFT__ARCHITECTURE}=https://github.com/elifesciences/sciencebeam-models/releases/download/biorxiv-grobid/2021-05-11-delft-grobid-table-biorxiv-10k-auto-v0.0.18-train-1865-e569.tar.gz" \
+    --validate-pickles
+
 ENV GROBID__CRF__ENGINE__SEGMENTATION=delft
 ENV GROBID__CRF__ENGINE__HEADER=delft
 ENV GROBID__CRF__ENGINE__AFFILIATION_ADDRESS=delft
+ENV GROBID__CRF__ENGINE__FULLTEXT=delft
 ENV GROBID__CRF__ENGINE__REFERENCE_SEGMENTER=delft
 ENV GROBID__CRF__ENGINE__CITATION=delft
+ENV GROBID__CRF__ENGINE__FIGURE=delft
+ENV GROBID__CRF__ENGINE__TABLE=delft
 
 ENV GROBID__FEATURES__SEGMENTATION_WHOLE_LINE_FEATURE=true
 
