@@ -1,5 +1,15 @@
 # ScienceBeam GROBID bioRxiv
 
+## ⚠️ Under new stewardship
+
+eLife have handed over stewardship of ScienceBeam to The Coko Foundation. You can now find the updated code repository at https://gitlab.coko.foundation/sciencebeam/sciencebeam-grobid-biorxiv and continue the conversation on Coko's Mattermost chat server: https://mattermost.coko.foundation/
+
+For more information on why we're doing this read our latest update on our new technology direction: https://elifesciences.org/inside-elife/daf1b699/elife-latest-announcing-a-new-technology-direction
+
+## Overview
+
+Note: This has been largely replaced by [ScienceBeam Parser](https://gitlab.coko.foundation/sciencebeam/sciencebeam-trainer-grobid).
+
 A variation of the [GROBID](https://github.com/kermitt2/grobid) image, that includes models trained on bioRxiv. It builds on top of changes in the following [GROBID fork](https://github.com/elifesciences/grobid) and [sciencebeam-trainer-delft](https://github.com/elifesciences/sciencebeam-trainer-delft) for the DL models.
 
 ## Run Image
